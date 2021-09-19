@@ -40,11 +40,24 @@ class Disciplina {
     }
 
     public static function getList() {
-        
+
+        $sql = new Sql();
+
+        $result = $sql->select("SELECT disciplina.*, semestre.nome_semestre "
+                . "FROM disciplina INNER JOIN semestre ON "
+                . "disciplina.codigo_semestre = semestre.codigo_semestre "
+                . "ORDER BY nome_semestre ASC;");
+
+        return $result;
     }
 
     public static function carregarCodigo($codigo) {
-        
+        $sql = new Sql();
+        $results = $sql->select("SELECT disciplina.*, semestre.nome_semestre "
+                . "FROM disciplina INNER JOIN semestre ON disciplina.codigo_semestre"
+                . " = semestre.codigo_semestre where codigo_disciplina =" . $codigo);
+
+        return $results;
     }
 
     public function cadDisciplina() {
@@ -66,11 +79,35 @@ class Disciplina {
     }
 
     public function altDisciplina() {
-        
+        $sql = new Sql();
+
+        $results = $sql->query("UPDATE disciplina SET codigo_disciplina = :CODIGO,"
+                . " nome_disciplina = :NOME, codigo_semestre = :SEMESTRE, "
+                . "descricao_disciplina = :DESCRICAO WHERE codigo_disciplina = :CODIGO", array(
+            ":CODIGO" => $this->getCodigoDiscplina(),
+            ":NOME" => $this->getNomeDisciplina(),
+            ":SEMESTRE" => $this->getCodigoSemestre(),
+            ":DESCRICAO" => $this->getDescricaoDisciplina()
+        ));
+
+        if ($results->rowCount() > 0) {
+            echo '<p class="msg-sucesso">Alterado</p>';
+        } else {
+            echo '<p class="msg-fracasso">Não foi possivel realizar a alteração</p>';
+        }
     }
 
     public function delDisciplina() {
-        
+        $sql = new Sql();
+
+        $results = $sql->query("DELETE FROM disciplina WHERE codigo_disciplina= :CODIGO", array(
+            ":CODIGO" => $this->getCodigoDiscplina()
+        ));
+
+        $this->getCodigoDiscplina("");
+        $this->getNomeDisciplina("");
+        $this->getCodigoSemestre("");
+        $this->getDescricaoDisciplina("");
     }
 
 }

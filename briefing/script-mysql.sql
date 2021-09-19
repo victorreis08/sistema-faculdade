@@ -48,6 +48,8 @@ UPDATE semestre SET nome_semestre = "7 semestre", dataInicio_semestre = "2021-08
 
 select * from semestre;
 
+DELETE from semestre where codigo_semestre = 241;
+
 alter table semestre drop COLUMN dataInicio_semestre, drop COLUMN dataTermino_semestre;
 
 alter table semestre add column dataInicio_semestre date, add column dataTermino_semestre date;
@@ -57,4 +59,9 @@ delete from semestre where codigo_semestre in (4,6,2,5,3);
 
 select * from disciplina;
 
+SELECT * FROM disciplina
+INNER JOIN semestre
+ON disciplina.codigo_semestre = semestre.codigo_semestre; 
+
+SELECT disciplina.*, semestre.nome_semestre FROM disciplina INNER JOIN semestre ON disciplina.codigo_semestre = semestre.codigo_semestre;
 

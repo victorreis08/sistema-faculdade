@@ -1,13 +1,14 @@
 /*-------------------------- Carregar ------------------*/
 carSemestre()
-limpar()
+cadSemestre()
+altSemestre()
 
 var msg = document.querySelector('.msg')
 var msgAlterar = document.querySelector('.msg-alterar')
 var msgSemestre = `<p class="msg-atencao">Campo semestre vazio.</p>`
 var msgDtInicio = `<p class="msg-atencao">Campo data início vazio.</p>`
 var msgDtTermino = `<p class="msg-atencao">Campo data termino vazio.</p>`
-var msgCodigo = `<p class="msg-fracasso">Não foi possivel identificar o semestre.</p>`
+var msgCodigo = `<p class="msg-fracasso">Não foi possível identificar o semestre.</p>`
 
 
 function limpar() {
@@ -19,7 +20,6 @@ function limpar() {
     document.getElementById("txt-semestre").value = ""
     document.getElementById("txt-dtInicio").value = ""
     document.getElementById("txt-dtTermino").value = ""
-    document.getElementById("form").value = ""
 }
 
 /*-------------------------- Modal ------------------*/
@@ -35,14 +35,15 @@ function modalCadastrar() {
             msg.innerHTML = ""
             limpar()
 
+
         }
     }
 
     fechar.onclick = function () {
         modal.style.display = "none"
         msg.innerHTML = ""
-        limpar()
 
+        limpar()
     }
 }
 
@@ -58,6 +59,8 @@ function modalAlterar() {
             modal.style.display = "none";
             msgAlterar.innerHTML = ""
             limpar()
+
+
         }
     }
 
@@ -65,6 +68,7 @@ function modalAlterar() {
         modal.style.display = "none";
         msgAlterar.innerHTML = ""
         limpar()
+
     }
 }
 
@@ -78,10 +82,10 @@ function carSemestre() {
                 let output = ''
                 for (let i in response) {
                     //converter datas
-                    let dtInicio = response[i].dataInicio_semestre.toString()
+                    let dtInicio = response[i].dataInicio_semestre
                     let dtTermino = response[i].dataTermino_semestre
 
-                    output += `<div class="box-registro msg-del">
+                    output += `<div class="box-registro">
             <p class="texto">Código: ${response[i].codigo_semestre}</p>
             <p class="texto">Nome: ${response[i].nome_semestre}</p>
             <p class="texto">Data Início: ${dtInicio}</p>
@@ -102,31 +106,28 @@ function carCampoSemestre(id) {
 
     fetch(url + id).then((response) => response.json())
             .then(response => {
-                for (let i in response) {
+                for (const i in response) {
                     document.getElementById("txt-codigoSemestre").value = response[i].codigo_semestre
                     document.getElementById("txt-semestreAlterar").value = response[i].nome_semestre
                     document.getElementById("txt-dtInicioAlterar").value = response[i].dataInicio_semestre
                     document.getElementById("txt-dtTerminoAlterar").value = response[i].dataTermino_semestre
 
                 }
+
             }).catch(error => console.log(error))
 
     modalAlterar()
 }
 
 function altSemestre() {
-    let txtCodigo = document.getElementById("txt-codigoSemestre").value
-    let txtSemestre = document.getElementById("txt-semestreAlterar").value
-    let txtDtInicio = document.getElementById("txt-dtInicioAlterar").value
-    let txtDtTermino = document.getElementById("txt-dtTerminoAlterar").value
     let form = document.getElementById("form-alterar")
 
     form.addEventListener("submit", (event) => {
         event.preventDefault();
-        const data = new URLSearchParams()
-        for (const p of new FormData(form)) {
-            data.append(p[0], p[1])
-        }
+        let txtCodigo = document.getElementById("txt-codigoSemestre").value
+        let txtSemestre = document.getElementById("txt-semestreAlterar").value
+        let txtDtInicio = document.getElementById("txt-dtInicioAlterar").value
+        let txtDtTermino = document.getElementById("txt-dtTerminoAlterar").value
         if (txtCodigo == "") {
             msgAlterar.innerHTML = msgCodigo
             return
@@ -140,6 +141,11 @@ function altSemestre() {
             msgAlterar.innerHTML = msgDtTermino
             return
         } else {
+            const data = new URLSearchParams()
+            for (const p of new FormData(form)) {
+                data.append(p[0], p[1])
+            }
+
             let url = 'php/altSemestre.php'
 
             fetch(url, {
@@ -153,6 +159,7 @@ function altSemestre() {
                 carSemestre()
 
 
+
             }).catch(error => console.log(error))
         }
     })
@@ -160,19 +167,14 @@ function altSemestre() {
 }
 
 function cadSemestre() {
-    let txtSemestre = document.getElementById("txt-semestre").value
-    let txtDtInicio = document.getElementById("txt-dtInicio").value
-    let txtDtTermino = document.getElementById("txt-dtTermino").value
+
     let form = document.getElementById("form")
 
     form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const data = new URLSearchParams()
-
-        for (const p of new FormData(form)) {
-            data.append(p[0], p[1])
-        }
-
+        event.preventDefault()
+        let txtSemestre = document.getElementById("txt-semestre").value
+        let txtDtInicio = document.getElementById("txt-dtInicio").value
+        let txtDtTermino = document.getElementById("txt-dtTermino").value
         if (txtSemestre == "") {
             msg.innerHTML = msgSemestre
             return
@@ -183,18 +185,25 @@ function cadSemestre() {
             msg.innerHTML = msgDtTermino
             return
         } else {
-            let url = 'php/cadSemestre.php'
+            const data = new URLSearchParams()
+
+            for (const p of new FormData(form)) {
+                data.append(p[0], p[1])
+            }
+            const url = 'php/cadSemestre.php'
 
             fetch(url, {
                 method: 'POST',
                 body: data
             })
-                    .then(response => response.text()).then(response => {
-                document.querySelector('.msg').innerHTML = response
-                limpar()
-                carSemestre()
+                    .then(response => response.text())
+                    .then(response => {
+                        document.querySelector('.msg').innerHTML = response
+                        limpar()
+                        carSemestre()
+                        console.log(response)
 
-            }).catch(error => console.log(error))
+                    }).catch(error => console.log(error))
         }
     })
 }
@@ -218,16 +227,6 @@ function deleteSemestre(id) {
                 .catch(error => console.log(error))
     }
 }
-/*-------------------------- Disciplina ------------------*/
-function cadDisciplina() {
-    let txtDisciplina = document.getElementById("txt-disciplina").value
-    let sclSemestre = domcument.getElementById("slc-semestre").value
-    let txaDisciplina = document.getElementById("txa-disciplina").value
-    
-    let url = "php/cadDisciplina.php"
-    
-    fetch(url,{
-        
-    })
-}
+
+
 

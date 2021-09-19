@@ -16,6 +16,7 @@ try {
     $semestre->setDataTerminoSemestre($txtDataTermino);
 
     $semestre->cadastroSemestre();
+    
 } catch (PDOException $e) {
     echo "Erro" . $e->getMessage();
 }

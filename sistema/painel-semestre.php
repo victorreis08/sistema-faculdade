@@ -37,7 +37,7 @@ require_once("header.php");
                         <input type="date" name="txt-dtTermino" id="txt-dtTermino" class="campo" >
                     </label>
                 </div>
-                <button class="btn" onclick="cadSemestre()">Cadastrar</button>
+                <button class="btn">Cadastrar</button>
 
                 <div class="msg"></div>
             </form>
@@ -69,12 +69,14 @@ require_once("header.php");
                         <input type="date" name="txt-dtTerminoAlterar" id="txt-dtTerminoAlterar" class="campo" >
                     </label>
                 </div>
-                <button class="btn" onclick="altSemestre()">Alterar</button>
+                <button class="btn">Alterar</button>
 
                 <div class="msg-alterar"></div>
             </form>
         </div>
     </div>
 </main>
+
+<script type="text/javascript" src="js/script-semestre.js"></script>
 <?php require_once ("footer.php"); ?>
 

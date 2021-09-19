@@ -9,11 +9,6 @@ try {
     $slcSemestre = $_POST["slc-semestre"];
     $txaDescricao = trim($_POST["txa-descricao"]);
     
-    if($txtDisciplina == ""){
-        
-    }
-
-
     $disciplina = new Disciplina();
 
     $disciplina->setNomeDisciplina($txtDisciplina);
