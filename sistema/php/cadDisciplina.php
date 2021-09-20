@@ -1,6 +1,7 @@
 <?php
 
 require_once ("../class/Sql.php");
+require_once "../class/Semestre.php";
 require_once ("../class/Disciplina.php");
 
 try {
@@ -17,6 +18,6 @@ try {
 
     $disciplina->cadDisciplina();
 } catch (PDOException $e) {
-    echo $e->getMessage();
+    echo '<p class="msg-fracasso">Não foi possivel realizar o cadastro.</p>';
 }
 ?>

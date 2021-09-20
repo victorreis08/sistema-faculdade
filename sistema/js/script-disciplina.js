@@ -7,7 +7,6 @@ function modalCadastrar() {
     let modal = document.getElementById("modal-cadastrar")
     let fechar = document.getElementById("fechar-cadastro")
 
-
     carSlcSemestre()
 
     modal.style.display = "block"
@@ -104,10 +103,10 @@ function cadDisciplina() {
 
                     .then(response => response.text())
                     .then(response => {
-                        document.querySelector(".msg").innerHTML = response;
-                        carDisciplina();
+                        document.querySelector(".msg").innerHTML = response
+                        carDisciplina()
                         limpar();
-                    }).catch(error => console.log(error))
+                    }).catch(error => document.querySelector(".msg").innerHTML = error)
 
         }
     })
@@ -182,7 +181,6 @@ function altDisciplina() {
 
     form.addEventListener("submit", (event) => {
         event.preventDefault()
-
         let txtDisciplina = document.getElementById("txt-disciplinaAlterar").value
         let slcSemestre = document.getElementById("slc-semestreAlterar").value
         let txaDescricao = document.getElementById("txa-descricaoAlterar").value
@@ -209,7 +207,7 @@ function altDisciplina() {
                         document.querySelector(".msg-alterar").innerHTML = response
                         carDisciplina()
                         limpar()
-                    }).catch(error => console.log(error))
+                    }).catch(error => document.querySelector(".msg-alterar").innerHTML = error)
         }
     })
 
@@ -226,9 +224,9 @@ function deleteDisciplina(id) {
         })
                 .then(response => response.text())
                 .then(response => {
-
+                    alert(response)
                     carDisciplina()
                 })
-                .catch(error => console.log(error))
+                .catch(error => alert(error))
     }
 }

@@ -1,11 +1,10 @@
 <?php
 
-class Disciplina {
+class Disciplina extends Semestre {
 
     private $codigoDisciplina;
     private $nomeDisciplina;
     private $descricaoDisciplina;
-    private $codigoSemestre;
 
     public function getCodigoDiscplina() {
         return $this->codigoDisciplina;
@@ -29,14 +28,6 @@ class Disciplina {
 
     public function setDescricaoDiscoplina($value) {
         $this->descricaoDisciplina = $value;
-    }
-
-    public function getCodigoSemestre() {
-        return $this->codigoSemestre;
-    }
-
-    public function setCodigoSemestre($value) {
-        $this->codigoSemestre = $value;
     }
 
     public static function getList() {
@@ -103,6 +94,12 @@ class Disciplina {
         $results = $sql->query("DELETE FROM disciplina WHERE codigo_disciplina= :CODIGO", array(
             ":CODIGO" => $this->getCodigoDiscplina()
         ));
+
+        if ($results->rowCount() > 0) {
+            echo "Exclusão Realizada com sucesso";
+        } else {
+            echo "Não foi possivel excluir o registro";
+        }
 
         $this->getCodigoDiscplina("");
         $this->getNomeDisciplina("");

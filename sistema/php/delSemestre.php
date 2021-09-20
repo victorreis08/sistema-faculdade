@@ -16,7 +16,7 @@ $deletar->deletarSemestre();
 
 
 } catch (PDOException $e){
-    echo "erro ".$e->getMessage();
+   echo 'Não foi possivel realizar a exclusão.';
 }
 
 ?>

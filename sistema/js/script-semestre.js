@@ -160,7 +160,7 @@ function altSemestre() {
 
 
 
-            }).catch(error => console.log(error))
+            }).catch(error => document.querySelector(".msg-alterar").innerHTML = error)
         }
     })
 
@@ -203,7 +203,7 @@ function cadSemestre() {
                         carSemestre()
                         console.log(response)
 
-                    }).catch(error => console.log(error))
+                    }).catch(error => document.querySelector('.msg').innerHTML = error)
         }
     })
 }
@@ -221,10 +221,10 @@ function deleteSemestre(id) {
         })
                 .then(response => response.text())
                 .then(response => {
-                    console.log(response)
+                    alert(response)
                     carSemestre()
                 })
-                .catch(error => console.log(error))
+                .catch(error => alert(error))
     }
 }
 

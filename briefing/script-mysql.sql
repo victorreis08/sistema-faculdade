@@ -65,3 +65,18 @@ ON disciplina.codigo_semestre = semestre.codigo_semestre;
 
 SELECT disciplina.*, semestre.nome_semestre FROM disciplina INNER JOIN semestre ON disciplina.codigo_semestre = semestre.codigo_semestre;
 
+SELECT * FROM prova;
+
+SELECT * FROM trabalho;
+
+ALTER TABLE trabalho add nome_trabalho varchar(50) not null after codigo_trabalho;
+
+ALTER TABLE prova DROP COLUMN nota_prova, DROP COLUMN notaAv2_prova; 
+
+ALTER TABLE prova add nota_prova float null after descricao_prova;
+
+ALTER TABLE prova ADD nome_prova varchar(50) not null after codigo_prova;
+
+ALTER TABLE prova MODIFY COLUMN descricao_prova varchar(250) NOT NULL after dataEntrega_prova;
+
+

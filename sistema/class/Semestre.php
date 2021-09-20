@@ -109,6 +109,12 @@ class Semestre{
         $results = $sql->query("DELETE FROM semestre WHERE codigo_semestre = :CODIGO", array(
             ":CODIGO" => $this->getCodigoSemestre()
         ));
+        
+        if($results->rowCount() > 0){
+             echo "Exclusão Realizada com sucesso";
+        }else{
+            echo "Não foi possivel excluir o registro";
+        }
 
         //zerar objetos após exclusão
         $this->getCodigoSemestre(0);

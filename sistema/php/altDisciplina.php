@@ -1,7 +1,9 @@
 <?php
 
 require_once "../class/Sql.php";
+require_once "../class/Semestre.php";
 require_once "../class/Disciplina.php";
+
 
 try {
 
@@ -19,6 +21,6 @@ try {
 
     $alterar->altDisciplina();
 } catch (PDOException $e) {
-    echo $e->getMessage();
+    echo '<p class="msg-fracasso">Não foi possivel realizar a alteração.</p>';
 }
 ?>

@@ -11,7 +11,7 @@ try {
     exit(json_encode($carregar));
            
 } catch (PDOException $e) {
-    $e->getMessage();
+    echo '<p class="msg-fracasso">Erro não foi possivel carregar os campos</p>';
 }
 
 

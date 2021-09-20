@@ -65,7 +65,7 @@ label{
     background-color: black;
 }
 
-.secao-semestre{
+.secao{
     background-color: #e5e5e5;
     border-radius: 5px;
     width: 1000px;
@@ -73,12 +73,20 @@ label{
     margin: 80px auto;
 }
 
+.row{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .box-registro{
     width: 300px;
     height: 225px;
     padding: 10px;
-    background-color: white;
     margin: 10px;
+    background-color: white;
     border-radius: 10px;
     box-sizing: border-box;
     display: inline-block;
@@ -159,4 +167,36 @@ label{
     font-size: 20px;
     text-align: center;
     font-family: "Open Sans";
+}
+
+.carregamento{
+    width: 50px;
+    margin: auto;
+}
+
+/*mobile*/
+@media (max-width:768px){
+    .main{
+        width: 100%;
+    }
+
+    .titulo{
+        font-family: "Open Sans";
+        text-align: center;
+    }
+
+    .secao{
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .form-modal{
+        width: 70%;
+        margin: auto;
+        padding: 50px;
+        background-color: #fff;
+        border-radius: 5px;
+
+    }
 }

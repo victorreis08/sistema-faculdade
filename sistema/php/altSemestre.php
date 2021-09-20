@@ -19,7 +19,7 @@ try {
 
     $alterar->alterarSemestre();
 } catch (PDOException $e) {
-    echo "Erro " . $e->getMessage();
+    echo '<p class="msg-fracasso">Não foi possivel realizar a alteração.</p>';
 }
 ?>
 
