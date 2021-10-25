@@ -1,100 +1,95 @@
-carDisciplina()
-cadDisciplina()
-altDisciplina()
+carDisciplina();
+cadDisciplina();
+altDisciplina();
 
 /*-------------------------- Modal ------------------*/
 function modalCadastrar() {
-    let modal = document.getElementById("modal-cadastrar")
-    let fechar = document.getElementById("fechar-cadastro")
+    let modal = document.getElementById("modal-cadastrar");
+    let fechar = document.getElementById("fechar-cadastro");
 
-    carSlcSemestre()
+    carSlcSemestre();
 
-    modal.style.display = "block"
-    //evento fechar modal
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none"
-            msg.innerHTML = ""
-            limpar()
-        }
-    }
-
-    fechar.onclick = function () {
-        modal.style.display = "none"
-        msg.innerHTML = ""
-        limpar()
-    }
-}
-
-function modalAlterar() {
-    let modal = document.getElementById("modal-alterar")
-    let fechar = document.getElementById("fechar-alterar")
-
-    modal.style.display = "block"
-
+    modal.style.display = "block";
     //evento fechar modal
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
-            msgAlterar.innerHTML = ""
-            limpar()
-            limparDisciplinas()
-
+            msg.innerHTML = "";
+            limpar();
         }
     }
 
     fechar.onclick = function () {
         modal.style.display = "none";
-        msgAlterar.innerHTML = ""
-        limpar()
-        limparDisciplinas()
+        msg.innerHTML = "";
+        limpar();
+    }
+}
+
+function modalAlterar() {
+    let modal = document.getElementById("modal-alterar");
+    let fechar = document.getElementById("fechar-alterar");
+
+    modal.style.display = "block";
+
+    //evento fechar modal
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            msgAlterar.innerHTML = "";
+            limpar();
+        }
+    }
+
+    fechar.onclick = function () {
+        modal.style.display = "none";
+        msgAlterar.innerHTML = "";
+        limpar();
     }
 }
 
 
 /*-------------------------- Disciplina ------------------*/
 
-var msg = document.querySelector('.msg')
-var msgAlterar = document.querySelector('.msg-alterar')
-
-var msgDisciplina = `<p class="msg-atencao">Campo Disciplina vazio</p>`
-var msgDescricao = `<p class="msg-atencao">Campo descrição vazio</p>`
-var msgCodigoDisciplina = `<p class="msg-fracasso">Não foi possível identificar a disciplina</p>`
+var msg = document.querySelector('.msg');
+var msgAlterar = document.querySelector('.msg-alterar');
+var msgDisciplina = `<p class="msg-atencao">Campo Disciplina vazio</p>`;
+var msgDescricao = `<p class="msg-atencao">Campo descrição vazio</p>`;
+var msgCodigoDisciplina = `<p class="msg-fracasso">Não foi possível identificar a disciplina</p>`;
 
 function  limpar() {
-    document.getElementById("txt-disciplina").value = ""
-    document.getElementById("txa-descricao").value = ""
-    document.getElementById("txa-descricaoAlterar").value = ""
-    document.getElementById("txt-disciplinaAlterar").value
+    document.getElementById("txt-disciplina").value = "";
+    document.getElementById("txa-descricao").value = "";
+    document.getElementById("txa-descricaoAlterar").value = "";
+    document.getElementById("txt-disciplinaAlterar").value = "";
 
 
 }
 function cadDisciplina() {
-    let form = document.getElementById("form-disciplina")
+    let form = document.getElementById("form-disciplina");
 
     form.addEventListener("submit", (event) => {
-        event.preventDefault()
+        event.preventDefault();
 
-        let txtDisciplina = document.getElementById("txt-disciplina").value
-        let slcSemestre = document.getElementById("slc-semestre").value
-        let txaDescricao = document.getElementById("txa-descricao").value
+        let txtDisciplina = document.getElementById("txt-disciplina").value;
+        let slcSemestre = document.getElementById("slc-semestre").value;
+        let txaDescricao = document.getElementById("txa-descricao").value;
 
         if (txtDisciplina == "") {
-            console.log(txtDisciplina)
-            msg.innerHTML = msgDisciplina
-            return
+            msg.innerHTML = msgDisciplina;
+            return;
         } else if (txaDescricao == "") {
-            msg.innerHTML = msgDescricao
-            return
+            msg.innerHTML = msgDescricao;
+            return;
         } else {
 
-            const data = new URLSearchParams()
+            const data = new URLSearchParams();
 
             for (const p of new FormData(form)) {
-                data.append(p[0], p[1])
+                data.append(p[0], p[1]);
             }
 
-            let url = "php/cadDisciplina.php"
+            let url = "php/cadDisciplina.php";
 
             fetch(url, {
                 method: 'POST',
@@ -103,39 +98,39 @@ function cadDisciplina() {
 
                     .then(response => response.text())
                     .then(response => {
-                        document.querySelector(".msg").innerHTML = response
-                        carDisciplina()
+                        document.querySelector(".msg").innerHTML = response;
+                        carDisciplina();
                         limpar();
-                    }).catch(error => document.querySelector(".msg").innerHTML = error)
+                    }).catch(error => document.querySelector(".msg").innerHTML = error);
 
         }
-    })
+    });
 }
 //carregar select form
 function carSlcSemestre() {
-    let url = "php/carSemestre.php"
+    let url = "php/carSemestre.php";
 
     fetch(url).then((res) => res.json())
             .then(response => {
-                let saida = ''
+                let saida = '';
                 for (const i in response) {
-                    let codigoSemestre = response[i].codigo_semestre
-                    let nomeSemestre = response[i].nome_semestre
-                    saida += `<option value="${codigoSemestre}">${nomeSemestre}</option>`
+                    let codigoSemestre = response[i].codigo_semestre;
+                    let nomeSemestre = response[i].nome_semestre;
+                    saida += `<option value="${codigoSemestre}">${nomeSemestre}</option>`;
                 }
-                document.getElementById("slc-semestre").innerHTML = saida
-                document.getElementById("slc-semestreAlterar").innerHTML = saida
-            }).catch(error => console.log(error))
+                document.getElementById("slc-semestre").innerHTML = saida;
+                document.getElementById("slc-semestreAlterar").innerHTML = saida;
+            }).catch(error => console.log(error));
 }
 
 function carDisciplina() {
 
-    let url = "php/carDisciplina.php"
+    let url = "php/carDisciplina.php";
 
     fetch(url).then((res) => res.json())
 
             .then(response => {
-                let output = ''
+                let output = '';
                 for (const i in response) {
                     output += `
                     <div class="box-registro">
@@ -145,16 +140,18 @@ function carDisciplina() {
                     <p class="texto">Descrição: ${response[i].descricao_disciplina}</p>
                     <button class="btn btn-link" onclick="carCampoDisciplina(${response[i].codigo_disciplina})"><i class="fa fa-pencil"></i></button>
                     <button class="btn btn-link" onclick="deleteDisciplina(${response[i].codigo_disciplina})"><i class="fa fa-trash"></i></button>
-                    </div>`
+                    </div>`;
                 }
-                document.getElementById("row-disciplina").innerHTML = output
+                document.getElementById("row-disciplina").innerHTML = output;
 
 
-            }).catch(error => console.log(error))
+            }).catch(error => console.log(error));
 }
 
 function carCampoDisciplina(id) {
-    let url = "php/carCampoDisciplina.php?id="
+
+
+    let url = "php/carCampoDisciplina.php?id=";
 
     fetch(url + id).then((response) => response.json())
             .then((response) => {
@@ -169,33 +166,34 @@ function carCampoDisciplina(id) {
                     document.getElementById("txa-descricaoAlterar").value = response[i].descricao_disciplina
                 }
 
-                carSlcSemestre()
-            }).catch(error => console.log(error))
+                carSlcSemestre();
+            }).catch(error => console.log(error));
 
 
-    modalAlterar()
+    modalAlterar();
 
 }
 function altDisciplina() {
-    let form = document.getElementById("form-alterar")
+    let form = document.getElementById("form-alterar");
 
     form.addEventListener("submit", (event) => {
         event.preventDefault()
-        let txtDisciplina = document.getElementById("txt-disciplinaAlterar").value
-        let slcSemestre = document.getElementById("slc-semestreAlterar").value
-        let txaDescricao = document.getElementById("txa-descricaoAlterar").value
+        let txtDisciplina = document.getElementById("txt-disciplinaAlterar").value;
+        let slcSemestre = document.getElementById("slc-semestreAlterar").value;
+        let txaDescricao = document.getElementById("txa-descricaoAlterar").value;
 
         if (txtDisciplina == "") {
-            msgAlterar.innerHTML = msgDisciplina
-            return
+            msgAlterar.innerHTML = msgDisciplina;
+            return;
         } else if (txaDescricao == "") {
-            msgAlterar.innerHTML = msgDescricao
+            msgAlterar.innerHTML = msgDescricao;
+            return;
         } else {
-            let url = "php/altDisciplina.php"
-            let data = new URLSearchParams()
+            let url = "php/altDisciplina.php";
+            let data = new URLSearchParams();
 
             for (const p of new FormData(form)) {
-                data.append(p[0], p[1])
+                data.append(p[0], p[1]);
             }
 
             fetch(url, {
@@ -204,19 +202,19 @@ function altDisciplina() {
             })
                     .then(response => response.text())
                     .then(response => {
-                        document.querySelector(".msg-alterar").innerHTML = response
-                        carDisciplina()
-                        limpar()
-                    }).catch(error => document.querySelector(".msg-alterar").innerHTML = error)
+                        document.querySelector(".msg-alterar").innerHTML = response;
+                        carDisciplina();
+                        limpar();
+                    }).catch(error => document.querySelector(".msg-alterar").innerHTML = error);
         }
-    })
+    });
 
 
 }
 function deleteDisciplina(id) {
-    let url = "php/delDisciplina.php?id="
+    let url = "php/delDisciplina.php?id=";
 
-    let confirmar = confirm("Você deseja excluir esse item?")
+    let confirmar = confirm("Você deseja excluir esse item?");
 
     if (confirmar == true) {
         fetch(url + id, {
@@ -224,9 +222,9 @@ function deleteDisciplina(id) {
         })
                 .then(response => response.text())
                 .then(response => {
-                    alert(response)
-                    carDisciplina()
+                    alert(response);
+                    carDisciplina();
                 })
-                .catch(error => alert(error))
+                .catch(error => alert(error));
     }
 }

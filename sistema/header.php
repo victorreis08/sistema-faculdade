@@ -1,11 +1,10 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Página</title>
-        <link rel="stylesheet" type="text/css" href="css/estilo.css">
-        <link rel="stylesheet" type="text/css" href="css/normalize.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    </head>
-    <body>
+<header class="header">
+    <nav class="menu">
+        <ul class="menu-itens">
+            <li class="itens"><a class="link-menu" href="painel-tarefa.php">Tarefas</a></li>
+            <li class="itens"><a class="link-menu" href="painel-semestre.php">Semestre</a></li>
+            <li class="itens"><a class="link-menu" href="painel-disciplina.php">Disciplina</a></li>
+        </ul>
+    </nav>
+</header>
 

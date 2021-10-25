@@ -1,6 +1,6 @@
 <?php
 
-class Semestre{
+class Semestre extends Sql {
 
     private $codigoSemestre;
     private $nomeSemestre;
@@ -67,7 +67,7 @@ class Semestre{
     public function cadastroSemestre() {
         $sql = new Sql();
 
-        $results = $sql->query("INSERT INTO semestre values(:CODIGO ,:NOME, :DTINICIO, :DTTERMINO)", array(
+        $results = $sql->runQuery("INSERT INTO semestre values(:CODIGO ,:NOME, :DTINICIO, :DTTERMINO)", array(
             ':CODIGO' => "",
             ':NOME' => $this->getNomeSemestre(),
             ':DTINICIO' => $this->getDataInicioSemestre(),
@@ -84,7 +84,7 @@ class Semestre{
     public function alterarSemestre() {
         $sql = new Sql();
 
-        $results = $sql->query("UPDATE semestre SET codigo_semestre = :CODIGO, "
+        $results = $sql->runQuery("UPDATE semestre SET codigo_semestre = :CODIGO, "
                 . "nome_semestre = :NOME, dataInicio_semestre = :DTINICIO,"
                 . "dataTermino_semestre = :DTTERMINO "
                 . "WHERE codigo_semestre = :CODIGO", array(
@@ -106,21 +106,20 @@ class Semestre{
     public function deletarSemestre() {
         $sql = new Sql();
 
-        $results = $sql->query("DELETE FROM semestre WHERE codigo_semestre = :CODIGO", array(
+        $results = $sql->runQuery("DELETE FROM semestre WHERE codigo_semestre = :CODIGO", array(
             ":CODIGO" => $this->getCodigoSemestre()
         ));
-        
-        if($results->rowCount() > 0){
-             echo "Exclusão Realizada com sucesso";
-        }else{
+
+        if ($results->rowCount() > 0) {
+            echo "Exclusão Realizada com sucesso";
+            //zerar objetos após exclusão
+            $this->getCodigoSemestre(0);
+            $this->getNomeSemestre("");
+            $this->getDataInicioSemestre("");
+            $this->getDataTerminoSemestre("");
+        } else {
             echo "Não foi possivel excluir o registro";
         }
-
-        //zerar objetos após exclusão
-        $this->getCodigoSemestre(0);
-        $this->getNomeSemestre("");
-        $this->getDataInicioSemestre("");
-        $this->getDataTerminoSemestre("");
     }
 
 }

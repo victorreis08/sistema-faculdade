@@ -19,15 +19,14 @@ CONSTRAINT fk_semestre FOREIGN KEY ( codigo_semestre ) REFERENCES semestre ( cod
 
 );
 
-create table prova(
-codigo_prova	int	not null	AUTO_INCREMENT	PRIMARY KEY,
-descricao_prova	Varchar(250)	not null,
-notaAv1_prova	decimal	not null,
-notaAv2_prova	decimal	not null,		
-dataEntrega_prova	date	not null,		
+create table tarefa(
+codigo_tarefa	int	not null	AUTO_INCREMENT	PRIMARY KEY,
+descricao_tarefa	Varchar(250)	not null,
+nota_tarefa	decimal	not null,	
+dataEntrega_tarefa	date	not null,		
 codigo_disciplina	int	not null,
 
-constraint fk_prova foreign key (codigo_disciplina) REFERENCES disciplina(codigo_disciplina)
+constraint fk_tarefa foreign key (codigo_disciplina) REFERENCES disciplina(codigo_disciplina)
 
 );
 
@@ -65,18 +64,24 @@ ON disciplina.codigo_semestre = semestre.codigo_semestre;
 
 SELECT disciplina.*, semestre.nome_semestre FROM disciplina INNER JOIN semestre ON disciplina.codigo_semestre = semestre.codigo_semestre;
 
-SELECT * FROM prova;
+SELECT * FROM tarefa;
+SELECT * FROM tarefa where status_tarefa="P";
 
-SELECT * FROM trabalho;
+SELECT * FROM tarefa;
 
-ALTER TABLE trabalho add nome_trabalho varchar(50) not null after codigo_trabalho;
+ALTER TABLE tarefa add status_tarefa char(1) not null after nota_tarefa;
 
-ALTER TABLE prova DROP COLUMN nota_prova, DROP COLUMN notaAv2_prova; 
+ALTER TABLE tarefa DROP COLUMN nota_tarefa;
+
+ALTER TABLE tarefa DROP COLUMN nota_prova, DROP COLUMN notaAv2_prova; 
 
 ALTER TABLE prova add nota_prova float null after descricao_prova;
 
-ALTER TABLE prova ADD nome_prova varchar(50) not null after codigo_prova;
+ALTER TABLE tarefa ADD nome_tarefa varchar(50) not null after codigo_tarefa;
 
 ALTER TABLE prova MODIFY COLUMN descricao_prova varchar(250) NOT NULL after dataEntrega_prova;
+
+SELECT tarefa.*, disciplina.nome_disciplina FROM tarefa INNER JOIN disciplina ON tarefa.codigo_disciplina = disciplina.codigo_disciplina where status_tarefa='C' ORDER BY nome_disciplina ASC ;
+
 
 

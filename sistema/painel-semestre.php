@@ -8,11 +8,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
+        <?php require_once ("header.php"); ?>
         <main class="main">
-
-            <h1 class="titulo titulo-1">Semestre</h1>
-
-
+            <section class="secao-titulo">
+                <h1 class="titulo">Semestre</h1>
+            </section>
             <section class="secao">
                 <button class="btn btn-link"  onclick="modalCadastrar()"><i class="fa fa-plus"></i></button>
                 <h2 class="titulo titulo-2">Semestres cadastrados</h2>
@@ -47,7 +47,7 @@
                         <button class="btn">Cadastrar</button>
 
                         <div class="msg">
-                        
+
                         </div>
                     </form>
                 </div>
@@ -81,7 +81,7 @@
                         <button class="btn">Alterar</button>
 
                         <div class="msg-alterar">
-                           
+
                         </div>
                     </form>
                 </div>

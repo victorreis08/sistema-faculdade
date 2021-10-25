@@ -6,9 +6,33 @@
         url(../fonts/OpenSans/OpenSans-Light.ttf);
 }
 
+.header{
+    width: 100%;
+    height: 100px;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    margin:0;
+}
+
+.menu-itens .itens{
+    list-style: none;
+    display: inline-block;
+    margin: 10px;
+}
+
+.link-menu{
+    font-family: "Open Sans";
+    font-size: 18px;
+    text-decoration: none;
+    color: #000;
+}
+.link-menu:hover{
+    color: #1895d3;
+}
+
 .main{
-    width: 1280px;
-    margin: auto;
+    width: 100%;
 }
 
 .titulo{
@@ -28,11 +52,44 @@ label{
     margin: 15px 0;
 }
 
+.tipo-tarefa{
+    width: 1000px;
+    margin: 80px auto;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-tarefa{
+    display: inline-block;
+    width: 200px !important;
+    margin: 5px;
+
+}
+
+
+.coluna{
+    width: 100%;
+    margin: 0;
+}
+
+.col-6{
+    width: 49%;
+    display: inline-block;
+}
+
+.col-4{
+    width: 32%;
+    display: inline-block;
+}
+
 
 .campo{
     font-family: "Open Sans";
     width: 100%;
-    height: 35px;
+    height: 40px;
     padding: 10px;
     border: 1px solid #e5e5e5;
     border-radius: 5px;
@@ -47,7 +104,10 @@ label{
 }
 
 .select{
+    width: 100%;
     height: 40px;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
 }
 
 .btn{
@@ -65,13 +125,25 @@ label{
     background-color: black;
 }
 
+.secao-titulo{
+    width: 100%;
+    text-align: center;
+    background-color: #1895d3;
+    padding: 80px 0;
+    color:#fff;
+}
+
 .secao{
     background-color: #e5e5e5;
     border-radius: 5px;
     width: 1000px;
     padding: 50px;
     margin: 80px auto;
+    -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0); 
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+
 }
+
 
 .row{
     align-items: center;
@@ -115,7 +187,7 @@ label{
     display: none;
     top: 0;
     left: 0;
-    padding: 12% 0;
+    padding: 10% 0;
     background-color: rgba(0,0,0,0.4);
     animation: fadeIn .5s ease-in-out;
 }
@@ -190,7 +262,10 @@ label{
         padding: 10px;
         box-sizing: border-box;
     }
-
+    .tipo-tarefa{
+        width: 100%;
+        margin: 80px auto;
+    }
     .form-modal{
         width: 70%;
         margin: auto;

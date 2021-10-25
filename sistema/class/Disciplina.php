@@ -54,7 +54,7 @@ class Disciplina extends Semestre {
     public function cadDisciplina() {
         $sql = new Sql();
 
-        $results = $sql->query("INSERT INTO disciplina VALUES(:CODIGO, :NOME, "
+        $results = $sql->runQuery("INSERT INTO disciplina VALUES(:CODIGO, :NOME, "
                 . ":DESCRICAO, :CODIGOSEMESTRE)", array(
             ":CODIGO" => "",
             ":NOME" => $this->getNomeDisciplina(),
@@ -72,7 +72,7 @@ class Disciplina extends Semestre {
     public function altDisciplina() {
         $sql = new Sql();
 
-        $results = $sql->query("UPDATE disciplina SET codigo_disciplina = :CODIGO,"
+        $results = $sql->runQuery("UPDATE disciplina SET codigo_disciplina = :CODIGO,"
                 . " nome_disciplina = :NOME, codigo_semestre = :SEMESTRE, "
                 . "descricao_disciplina = :DESCRICAO WHERE codigo_disciplina = :CODIGO", array(
             ":CODIGO" => $this->getCodigoDiscplina(),
@@ -91,20 +91,19 @@ class Disciplina extends Semestre {
     public function delDisciplina() {
         $sql = new Sql();
 
-        $results = $sql->query("DELETE FROM disciplina WHERE codigo_disciplina= :CODIGO", array(
+        $results = $sql->runQuery("DELETE FROM disciplina WHERE codigo_disciplina= :CODIGO", array(
             ":CODIGO" => $this->getCodigoDiscplina()
         ));
 
         if ($results->rowCount() > 0) {
             echo "Exclusão Realizada com sucesso";
+            $this->getCodigoDiscplina("");
+            $this->getNomeDisciplina("");
+            $this->getCodigoSemestre("");
+            $this->getDescricaoDisciplina("");
         } else {
             echo "Não foi possivel excluir o registro";
         }
-
-        $this->getCodigoDiscplina("");
-        $this->getNomeDisciplina("");
-        $this->getCodigoSemestre("");
-        $this->getDescricaoDisciplina("");
     }
 
 }

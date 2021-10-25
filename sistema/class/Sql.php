@@ -33,7 +33,7 @@ class Sql extends PDO {
         $statment->bindParam($key, $value);
     }
 
-    public function query($RawQuery, $params = array()) {
+    public function runQuery($RawQuery, $params = array()) {
         $stmt = $this->conn->prepare($RawQuery);
         $this->setParams($stmt, $params);
         $stmt->execute();
@@ -41,7 +41,7 @@ class Sql extends PDO {
     }
 
     public function select($rawQuery, $params = array()): array {
-        $stmt = $this->query($rawQuery, $params);
+        $stmt = $this->runQuery($rawQuery, $params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

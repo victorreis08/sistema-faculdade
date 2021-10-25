@@ -1,64 +1,39 @@
 /*-------------------------- Carregar ------------------*/
-carSemestre()
-cadSemestre()
-altSemestre()
+carSemestre();
+cadSemestre();
+altSemestre();
 
-var msg = document.querySelector('.msg')
-var msgAlterar = document.querySelector('.msg-alterar')
-var msgSemestre = `<p class="msg-atencao">Campo semestre vazio.</p>`
-var msgDtInicio = `<p class="msg-atencao">Campo data início vazio.</p>`
-var msgDtTermino = `<p class="msg-atencao">Campo data termino vazio.</p>`
-var msgCodigo = `<p class="msg-fracasso">Não foi possível identificar o semestre.</p>`
+var msg = document.querySelector('.msg');
+var msgAlterar = document.querySelector('.msg-alterar');
+var msgSemestre = `<p class="msg-atencao">Campo semestre vazio.</p>`;
+var msgDtInicio = `<p class="msg-atencao">Campo data início vazio.</p>`;
+var msgDtTermino = `<p class="msg-atencao">Campo data termino vazio.</p>`;
+var msgCodigo = `<p class="msg-fracasso">Não foi possível identificar o semestre.</p>`;
 
 
 function limpar() {
-    document.getElementById("txt-codigoSemestre").value = ""
-    document.getElementById("txt-semestreAlterar").value = ""
-    document.getElementById("txt-dtInicioAlterar").value = ""
-    document.getElementById("txt-dtTerminoAlterar").value = ""
-    document.getElementById("form-alterar").value = ""
-    document.getElementById("txt-semestre").value = ""
-    document.getElementById("txt-dtInicio").value = ""
-    document.getElementById("txt-dtTermino").value = ""
+    document.getElementById("txt-codigoSemestre").value = "";
+    document.getElementById("txt-semestreAlterar").value = "";
+    document.getElementById("txt-dtInicioAlterar").value = "";
+    document.getElementById("txt-dtTerminoAlterar").value = "";
+    document.getElementById("form-alterar").value = "";
+    document.getElementById("txt-semestre").value = "";
+    document.getElementById("txt-dtInicio").value = "";
+    document.getElementById("txt-dtTermino").value = "";
 }
 
 /*-------------------------- Modal ------------------*/
 function modalCadastrar() {
-    let modal = document.getElementById("modal-cadastrar")
-    let fechar = document.getElementById("fechar-cadastro")
+    let modal = document.getElementById("modal-cadastrar");
+    let fechar = document.getElementById("fechar-cadastro");
 
-    modal.style.display = "block"
-    //evento fechar modal
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none"
-            msg.innerHTML = ""
-            limpar()
-
-
-        }
-    }
-
-    fechar.onclick = function () {
-        modal.style.display = "none"
-        msg.innerHTML = ""
-
-        limpar()
-    }
-}
-
-function modalAlterar() {
-    let modal = document.getElementById("modal-alterar")
-    let fechar = document.getElementById("fechar-alterar")
-
-    modal.style.display = "block"
-
+    modal.style.display = "block";
     //evento fechar modal
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = "none";
-            msgAlterar.innerHTML = ""
-            limpar()
+            msg.innerHTML = "";
+            limpar();
 
 
         }
@@ -66,55 +41,96 @@ function modalAlterar() {
 
     fechar.onclick = function () {
         modal.style.display = "none";
-        msgAlterar.innerHTML = ""
-        limpar()
+        msg.innerHTML = "";
+
+        limpar();
+    }
+}
+
+function modalAlterar() {
+    let modal = document.getElementById("modal-alterar");
+    let fechar = document.getElementById("fechar-alterar");
+
+    modal.style.display = "block";
+
+    //evento fechar modal
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            ;
+            msgAlterar.innerHTML = "";
+            limpar;
+
+
+        }
+    }
+
+    fechar.onclick = function () {
+        modal.style.display = "none";
+        msgAlterar.innerHTML = "";
+        limpar();
 
     }
 }
 
 /*-------------------------- Semestre ------------------*/
+
+function adicionaZero(numero) {
+    if (numero <= 9)
+        return "0" + numero;
+    else
+        return numero;
+}
 function carSemestre() {
-    let url = "php/carSemestre.php"
+    let url = "php/carSemestre.php";
 
     fetch(url).then((res) => res.json())
 
             .then(response => {
-                let output = ''
+
+                let output = '';
                 for (let i in response) {
                     //converter datas
-                    let dtInicio = response[i].dataInicio_semestre
-                    let dtTermino = response[i].dataTermino_semestre
+                    let dtInicio = response[i].dataInicio_semestre;
+                    let dtTermino = response[i].dataTermino_semestre;
+
+                    let dtInicioNew = new Date(dtInicio);
+                    let dtInicioFormat = adicionaZero(dtInicioNew.getUTCDate()) + "/" + (adicionaZero(dtInicioNew.getUTCMonth() + 1)) + "/" + dtInicioNew.getUTCFullYear();
+
+                    let dtTerminoNew = new Date(dtTermino);
+                    let dtTerminoFormat = adicionaZero(dtTerminoNew.getUTCDate()) + "/" + (adicionaZero(dtTerminoNew.getUTCMonth() + 1)) + "/" + dtTerminoNew.getUTCFullYear();
 
                     output += `<div class="box-registro">
             <p class="texto">Código: ${response[i].codigo_semestre}</p>
             <p class="texto">Nome: ${response[i].nome_semestre}</p>
-            <p class="texto">Data Início: ${dtInicio}</p>
-            <p class="texto">Data Termino: ${dtTermino}</p>
+            <p class="texto">Data Início: ${dtInicioFormat}</p>
+            <p class="texto">Data Termino: ${dtTerminoFormat}</p>
             <button class="btn btn-link" onClick="carCampoSemestre(${response[i].codigo_semestre})"><i class="fa fa-pencil"></i></button>
             <button class="btn btn-link" onClick="deleteSemestre(${response[i].codigo_semestre})"><i class="fa fa-trash"></i></button>
+            <button class="btn btn-link" onClick="detalheSemestre(${response[i].codigo_semestre})"><i class="fa fa-expand"></i></button>
 </div>`;
                 }
-                document.getElementById("row-semestre").innerHTML = output
+                document.getElementById("row-semestre").innerHTML = output;
 
 
-            }).catch(error => console.log(error))
+            }).catch(error => console.log(error));
 }
 
 
 function carCampoSemestre(id) {
-    let url = "php/carCampoSemestre.php?id="
+    let url = "php/carCampoSemestre.php?id=";
 
     fetch(url + id).then((response) => response.json())
             .then(response => {
                 for (const i in response) {
-                    document.getElementById("txt-codigoSemestre").value = response[i].codigo_semestre
-                    document.getElementById("txt-semestreAlterar").value = response[i].nome_semestre
-                    document.getElementById("txt-dtInicioAlterar").value = response[i].dataInicio_semestre
-                    document.getElementById("txt-dtTerminoAlterar").value = response[i].dataTermino_semestre
+                    document.getElementById("txt-codigoSemestre").value = response[i].codigo_semestre;
+                    document.getElementById("txt-semestreAlterar").value = response[i].nome_semestre;
+                    document.getElementById("txt-dtInicioAlterar").value = response[i].dataInicio_semestre;
+                    document.getElementById("txt-dtTerminoAlterar").value = response[i].dataTermino_semestre;
 
                 }
 
-            }).catch(error => console.log(error))
+            }).catch(error => console.log(error));
 
     modalAlterar()
 }
@@ -124,29 +140,29 @@ function altSemestre() {
 
     form.addEventListener("submit", (event) => {
         event.preventDefault();
-        let txtCodigo = document.getElementById("txt-codigoSemestre").value
-        let txtSemestre = document.getElementById("txt-semestreAlterar").value
-        let txtDtInicio = document.getElementById("txt-dtInicioAlterar").value
-        let txtDtTermino = document.getElementById("txt-dtTerminoAlterar").value
+        let txtCodigo = document.getElementById("txt-codigoSemestre").value;
+        let txtSemestre = document.getElementById("txt-semestreAlterar").value;
+        let txtDtInicio = document.getElementById("txt-dtInicioAlterar").value;
+        let txtDtTermino = document.getElementById("txt-dtTerminoAlterar").value;
         if (txtCodigo == "") {
-            msgAlterar.innerHTML = msgCodigo
-            return
+            msgAlterar.innerHTML = msgCodigo;
+            return;
         } else if (txtSemestre == "") {
-            msgAlterar.innerHTML = msgSemestre
-            return
+            msgAlterar.innerHTML = msgSemestre;
+            return;
         } else if (txtDtInicio == "") {
-            msgAlterar.innerHTML = msgDtInicio
-            return
+            msgAlterar.innerHTML = msgDtInicio;
+            return;
         } else if (txtDtTermino == "") {
-            msgAlterar.innerHTML = msgDtTermino
-            return
+            msgAlterar.innerHTML = msgDtTermino;
+            return;
         } else {
             const data = new URLSearchParams()
             for (const p of new FormData(form)) {
-                data.append(p[0], p[1])
+                data.append(p[0], p[1]);
             }
 
-            let url = 'php/altSemestre.php'
+            let url = 'php/altSemestre.php';
 
             fetch(url, {
                 method: 'POST',
@@ -154,43 +170,43 @@ function altSemestre() {
             })
                     .then(response => response.text()).then(response => {
 
-                console.log(response)
-                document.querySelector('.msg-alterar').innerHTML = response
-                carSemestre()
+                console.log(response);
+                document.querySelector('.msg-alterar').innerHTML = response;
+                carSemestre();
 
 
 
-            }).catch(error => document.querySelector(".msg-alterar").innerHTML = error)
+            }).catch(error => document.querySelector(".msg-alterar").innerHTML = error);
         }
-    })
+    });
 
 }
 
 function cadSemestre() {
 
-    let form = document.getElementById("form")
+    let form = document.getElementById("form");
 
     form.addEventListener("submit", (event) => {
-        event.preventDefault()
-        let txtSemestre = document.getElementById("txt-semestre").value
-        let txtDtInicio = document.getElementById("txt-dtInicio").value
-        let txtDtTermino = document.getElementById("txt-dtTermino").value
+        event.preventDefault();
+        let txtSemestre = document.getElementById("txt-semestre").value;
+        let txtDtInicio = document.getElementById("txt-dtInicio").value;
+        let txtDtTermino = document.getElementById("txt-dtTermino").value;
         if (txtSemestre == "") {
-            msg.innerHTML = msgSemestre
-            return
+            msg.innerHTML = msgSemestre;
+            return;
         } else if (txtDtInicio == "") {
-            msg.innerHTML = msgDtInicio
-            return
+            msg.innerHTML = msgDtInicio;
+            return;
         } else if (txtDtTermino == "") {
-            msg.innerHTML = msgDtTermino
-            return
+            msg.innerHTML = msgDtTermino;
+            return;
         } else {
-            const data = new URLSearchParams()
+            const data = new URLSearchParams();
 
             for (const p of new FormData(form)) {
-                data.append(p[0], p[1])
+                data.append(p[0], p[1]);
             }
-            const url = 'php/cadSemestre.php'
+            const url = 'php/cadSemestre.php';
 
             fetch(url, {
                 method: 'POST',
@@ -198,22 +214,20 @@ function cadSemestre() {
             })
                     .then(response => response.text())
                     .then(response => {
-                        document.querySelector('.msg').innerHTML = response
-                        limpar()
-                        carSemestre()
-                        console.log(response)
-
-                    }).catch(error => document.querySelector('.msg').innerHTML = error)
+                        document.querySelector('.msg').innerHTML = response;
+                        limpar();
+                        carSemestre();
+                    }).catch(error => document.querySelector('.msg').innerHTML = error);
         }
-    })
+    });
 }
 
 
 function deleteSemestre(id) {
 
-    let url = "php/delSemestre.php?id="
+    let url = "php/delSemestre.php?id=";
 
-    let confirmar = confirm("Você deseja excluir esse item?")
+    let confirmar = confirm("Você deseja excluir esse item?");
 
     if (confirmar == true) {
         fetch(url + id, {
@@ -221,10 +235,10 @@ function deleteSemestre(id) {
         })
                 .then(response => response.text())
                 .then(response => {
-                    alert(response)
-                    carSemestre()
+                    alert(response);
+                    carSemestre();
                 })
-                .catch(error => alert(error))
+                .catch(error => alert(error));
     }
 }
 

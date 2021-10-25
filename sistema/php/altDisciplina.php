@@ -1,6 +1,6 @@
 <?php
 
-require_once "../class/Sql.php";
+require_once ("../class/Sql.php");
 require_once "../class/Semestre.php";
 require_once "../class/Disciplina.php";
 
